@@ -1,3 +1,7 @@
+import { propCoordinates, buildProps } from "./map_data";
+
+type Nullable<T> = T | null | undefined;
+
 class Tile {
   // Coordinates
   x: number;
@@ -8,6 +12,9 @@ class Tile {
   east: number;
   south: number;
   west: number;
+
+  // Objects (Unit || Prop)
+  object: Nullable<object> = null;
 
   constructor(
     x: number,
@@ -27,15 +34,23 @@ class Tile {
 }
 
 function generateMap(xMax: number, yMax: number) {
-  // Creating array to represent map-grid
-  let map = []; 
-  for (let y = 0; y < yMax; y++) {
+  // Creating a 2D array to represent the map
+  let map = [];
+  for (let y = 1; y <= yMax; y++) {
     let row = [];
-    for (let x = 0; x < xMax; x++) {
+    for (let x = 1; x <= xMax; x++) {
       const tile = new Tile(x, y);
       row.push(tile);
     }
     map.push(row);
   }
+  console.log(map);
   return map;
 }
+
+const map = generateMap(20, 20);
+buildProps(map, propCoordinates);
+console.log(map);
+console.log("done");
+
+export { Tile };
